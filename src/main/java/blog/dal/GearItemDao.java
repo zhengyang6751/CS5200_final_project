@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 public class GearItemDao {
     protected ConnectionManager connectionManager;
 
@@ -79,7 +81,38 @@ public class GearItemDao {
         }
         return null;
     }
-
+    public List<GearItem> getGearItemByPartialName(String itemName) throws SQLException{
+        String query = "SELECT * FROM GearItem WHERE itemName LIKE ?;";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet results = null;
+        List<GearItem> gearItems = new ArrayList<>();
+        try {
+            connection = connectionManager.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, "%" + itemName + "%");
+            results = statement.executeQuery();
+            while(results.next()) {
+                String resultItemName = results.getString("itemName");
+                int itemLevel = results.getInt("itemLevel");
+                String slotName = results.getString("slotName");
+                int requiredLevel = results.getInt("requiredLevel");
+                String requiredJob = results.getString("requiredJob");
+                int defenseRating = results.getInt("defenseRating");
+                int magicDefenseRating = results.getInt("magicDefenseRating");
+                GearItem gearItem = new GearItem(resultItemName, itemLevel, slotName, requiredLevel, requiredJob, defenseRating, magicDefenseRating);
+                gearItems.add(gearItem);
+            }
+            return gearItems;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+        }
+    }
     public GearItem updateDefenseRating(GearItem gearItem, int newDefenseRating) throws SQLException {
         String query = "UPDATE GearItem SET defenseRating=? WHERE itemName=?;";
         Connection connection = null;

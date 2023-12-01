@@ -74,7 +74,7 @@ public class AccountUpdate extends HttpServlet {
                     System.out.println(newName);
                     if (newName == null || newName.trim().isEmpty()) {
             	            messages.put("success", "Please enter a valid UserName.");      
-                    } else {        
+                    } else {
                             account = accountDao.updateName(account, newName);
                             messages.put("success", "Successfully updated " + id);
                     }

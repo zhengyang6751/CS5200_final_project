@@ -167,10 +167,15 @@ public class Inserter {
 		System.out.println("Successfully created gearItem2: " + gearItem2);
 		gearItem1 = gearItemDao.getGearItemByName("Item3");
 		System.out.println("Successfully retrieved gearItem1: " + gearItem1);
+		List<GearItem> gearList = gearItemDao.getGearItemByPartialName("Item");
+		for (GearItem gearItem : gearList) {
+			System.out.println(gearItem);
+		}
 		gearItem1 = gearItemDao.updateDefenseRating(gearItem1, 6);
 		System.out.println("Successfully updated gearItem1: " + gearItem1);
 		gearItem2 = gearItemDao.updateMagicDefenseRating(gearItem2, 1500);
 		System.out.println("Successfully updated gearItem2: " + gearItem2);
+
 
 		EquippedItem equippedItem1 = new EquippedItem(char2.getFirstName(), char2.getLastName(), "Main Hand", weaponItem1.getItemName());
 		equippedItem1 = equippedItemDao.create(equippedItem1);

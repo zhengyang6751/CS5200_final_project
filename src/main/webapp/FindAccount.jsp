@@ -34,6 +34,7 @@
                 <th>emailAddress</th>
                 <th>Delete Account</th>
                 <th>Update Account</th>
+                <th>Characters</th>
             </tr>
             <c:forEach items="${accounts}" var="account" >
                 <tr>
@@ -42,6 +43,7 @@
                     <td><c:out value="${account.getEmailAddress()}" /></td>
                     <td><a href="accountdelete?accountId=<c:out value="${account.getAccountId()}"/>">Delete</a></td>
                     <td><a href="accountupdate?accountId=<c:out value="${account.getAccountId()}"/>">Update</a></td>
+                    <td><a href="characters?accountId=<c:out value="${account.getAccountId()}"/>">Characters</a></td>
                 </tr>
             </c:forEach>
        </table>

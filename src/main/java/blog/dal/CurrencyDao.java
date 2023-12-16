@@ -158,7 +158,7 @@ public class CurrencyDao {
             statement = connection.prepareStatement(query);
             statement.setString(1, character.getFirstName());
             statement.setString(2, character.getLastName());
-            System.out.println("@@@@@");
+            
             results = statement.executeQuery();
 
             while (results.next()) {            	

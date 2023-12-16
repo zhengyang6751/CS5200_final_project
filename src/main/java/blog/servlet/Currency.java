@@ -55,7 +55,7 @@ public class Currency extends HttpServlet {
                 messages.put("error", "SQL error: " + e.getMessage());
             }
         }
-        System.out.println(currencies.get(0).toString());
+        
         
         req.setAttribute("currencies", currencies);
         req.setAttribute("messages", messages);

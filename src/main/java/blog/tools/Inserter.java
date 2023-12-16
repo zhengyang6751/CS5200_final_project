@@ -38,6 +38,11 @@ public class Inserter {
 		CustomizableGearDao customizableGearDao = CustomizableGearDao.getInstance();
 		EquippedItemDao equippedItemDao = EquippedItemDao.getInstance();
 		MiscellaneousItemDao miscellaneousItemDao = MiscellaneousItemDao.getInstance();
+		slotDao slotDao = blog.dal.slotDao.getInstance();
+
+		// INSERT
+		slotDao.create(new slot("Main Hand"));
+		slotDao.create(new slot("Head"));
 
 
 		Account acc1 = new Account("lily", "lily@gmail.com");

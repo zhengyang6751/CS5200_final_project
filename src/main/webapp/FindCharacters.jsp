@@ -21,6 +21,7 @@ contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
         <th>vitality</th>
         <th>job</th>
         <th>currency</th>
+        <th>inventory</th>
       </tr>
       <c:forEach items="${characters}" var="character">
         <tr>
@@ -33,6 +34,7 @@ contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
           <td><c:out value="${character.getVitality()}" /></td>
           <td><a href="jobs?firstName=<c:out value="${character.getFirstName()}"/>&lastName=<c:out value="${character.getLastName()}"/>">Jobs</a></td>
           <td><a href="currency?firstName=<c:out value="${character.getFirstName()}"/>&lastName=<c:out value="${character.getLastName()}"/>">Currency</a></td>
+          <td><a href="inventory?firstName=<c:out value="${character.getFirstName()}"/>&lastName=<c:out value="${character.getLastName()}"/>">Inventory</a></td>
         </tr>
       </c:forEach>
     </table>

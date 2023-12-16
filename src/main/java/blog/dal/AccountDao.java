@@ -184,40 +184,41 @@ public class AccountDao{
 	}
 
 	public List<Account> getAccountByName(String userName) throws SQLException {
-		List<Account> accounts = new ArrayList<Account>();
-		String selectAccount =
-			"SELECT * " +
-			"FROM Account " +
-			"WHERE name=?;";
-		Connection connection = null;
-		PreparedStatement selectStmt = null;
-		ResultSet results = null;
-		try {
-			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectAccount);
-			selectStmt.setString(1, userName);
-			results = selectStmt.executeQuery();
-			while(results.next()) {
-				int id = results.getInt("accountId");
-				String name = results.getString("name");
-				String email = results.getString("emailAddress");
-				Account account = new Account(id, name, email);
-				accounts.add(account);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			if(connection != null) {
-				connection.close();
-			}
-			if(selectStmt != null) {
-				selectStmt.close();
-			}
-			if(results != null) {
-				results.close();
-	}
-		}
-		return accounts;
+	    List<Account> accounts = new ArrayList<Account>();
+	    String selectAccount =
+	        "SELECT * " +
+	        "FROM Account " +
+	        "WHERE name LIKE ?;";
+	    Connection connection = null;
+	    PreparedStatement selectStmt = null;
+	    ResultSet results = null;
+	    try {
+	        connection = connectionManager.getConnection();
+	        selectStmt = connection.prepareStatement(selectAccount);
+	        selectStmt.setString(1, "%" + userName + "%");  // 使用LIKE和通配符
+	        results = selectStmt.executeQuery();
+	        while(results.next()) {
+	            int id = results.getInt("accountId");
+	            String name = results.getString("name");
+	            String email = results.getString("emailAddress");
+	            Account account = new Account(id, name, email);
+	            accounts.add(account);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    } finally {
+	        if(connection != null) {
+	            connection.close();
+	        }
+	        if(selectStmt != null) {
+	            selectStmt.close();
+	        }
+	        if(results != null) {
+	            results.close();
+	        }
+	    }
+	    return accounts;
 	}
 }
+

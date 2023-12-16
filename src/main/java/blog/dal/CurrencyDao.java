@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CurrencyDao {
@@ -141,5 +143,43 @@ public class CurrencyDao {
 				statement.close();
 			}
 		}
+	}
+	public List<Currency> getAllCurrencies() throws SQLException {
+        List<Currency> currencyList = new ArrayList<>();
+        String query = "SELECT * FROM Currency;";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet results = null;
+
+        try {
+            connection = connectionManager.getConnection();
+            statement = connection.prepareStatement(query);
+            results = statement.executeQuery();
+
+            while (results.next()) {
+                String currencyName = results.getString("currencyName");
+                int weeklyCaps = results.getInt("weeklyCaps");
+                int totalCaps = results.getInt("totalCaps");
+                Currency currency = new Currency(currencyName, weeklyCaps, totalCaps);
+                currencyList.add(currency);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (results != null) {
+                results.close();
+            }
+        }
+        
+
+        return currencyList;
+    
 	}
 }

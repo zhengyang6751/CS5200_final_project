@@ -154,4 +154,40 @@ public class JobsDao {
 			}
 		}
 	}
+	    public List<Jobs> getAllJobs() throws SQLException {
+        List<Jobs> jobList = new ArrayList<>();
+        String query = "SELECT * FROM Job;";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet results = null;
+
+        try {
+            connection = connectionManager.getConnection();
+            statement = connection.prepareStatement(query);
+            results = statement.executeQuery();
+
+            while (results.next()) {
+                String jobName = results.getString("jobName");
+                String category = results.getString("category");
+                Jobs job = new Jobs(jobName, category);
+                jobList.add(job);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (results != null) {
+                results.close();
+            }
+        }
+
+        return jobList;
+   
+	}
 }

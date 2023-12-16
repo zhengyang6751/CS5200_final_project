@@ -4,6 +4,7 @@ public class Account {
     private int accountId;
     private String name;
     private String emailAddress;
+    private Currency currency;
     
 	public Account(String name, String emailAddress) {
 		this.name = name;
@@ -34,6 +35,14 @@ public class Account {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+	public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+	
 	@Override
 	public String toString() {
 		return "Account [accountId=" + accountId + ", name=" + name + ", emailAddress=" + emailAddress + "]";

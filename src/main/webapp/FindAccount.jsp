@@ -35,6 +35,8 @@
                 <th>Delete Account</th>
                 <th>Update Account</th>
                 <th>Characters</th>
+                <th>Currency</th>
+             
             </tr>
             <c:forEach items="${accounts}" var="account" >
                 <tr>
@@ -44,7 +46,11 @@
                     <td><a href="accountdelete?accountId=<c:out value="${account.getAccountId()}"/>">Delete</a></td>
                     <td><a href="accountupdate?accountId=<c:out value="${account.getAccountId()}"/>">Update</a></td>
                     <td><a href="characters?accountId=<c:out value="${account.getAccountId()}"/>">Characters</a></td>
-                </tr>
+					<td><a href="currency?accountId=${account.getAccountId()}">Currency</a></td>
+					
+					
+   				 </tr>
+                
             </c:forEach>
        </table>
 </body>

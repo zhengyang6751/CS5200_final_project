@@ -142,18 +142,20 @@ public class CurrencyDao {
 			if(statement != null) {
 				statement.close();
 			}
+			}
 		}
-	}
-	public List<Currency> getAllCurrencies() throws SQLException {
-        List<Currency> currencyList = new ArrayList<>();
-        String query = "SELECT * FROM Currency;";
+		
+	public List<Currency> getCurrenciesByCharacterName(String characterName) throws SQLException {
+        String query = "SELECT * FROM Currency WHERE characterName = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet results = null;
+        List<Currency> currencies = new ArrayList<>();
 
         try {
             connection = connectionManager.getConnection();
             statement = connection.prepareStatement(query);
+            statement.setString(1, characterName);
             results = statement.executeQuery();
 
             while (results.next()) {
@@ -161,25 +163,14 @@ public class CurrencyDao {
                 int weeklyCaps = results.getInt("weeklyCaps");
                 int totalCaps = results.getInt("totalCaps");
                 Currency currency = new Currency(currencyName, weeklyCaps, totalCaps);
-                currencyList.add(currency);
+                currencies.add(currency);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-            if (statement != null) {
-                statement.close();
-            }
-            if (results != null) {
-                results.close();
-            }
         }
-        
 
-        return currencyList;
-    
-	}
+        return currencies;
+    }
+	
 }

@@ -42,9 +42,11 @@ public class Currency extends HttpServlet {
             try {
                 Character character = characterDao.getCharacterByFirstNameAndLastName(firstName, lastName);
                 if (character != null) {
-                    System.out.println("Character found: " + character.getFirstName() + " " + character.getLastName());
-                    currencies = currencyDao.getCurrenciesByCharacterName(character.getFirstName() + " " + character.getLastName());
-                    System.out.println("Currencies found: " + currencies.size());
+                    currencies = currencyDao.getCurrenciesByFullName(character);
+                  
+                    if (currencies.isEmpty()) {
+                        messages.put("info", "No currencies found for the given character");
+                    }
                 } else {
                     messages.put("error", "Character not found with the given First Name and Last Name");
                 }
@@ -53,7 +55,8 @@ public class Currency extends HttpServlet {
                 messages.put("error", "SQL error: " + e.getMessage());
             }
         }
-
+        System.out.println(currencies.get(0).toString());
+        
         req.setAttribute("currencies", currencies);
         req.setAttribute("messages", messages);
         req.getRequestDispatcher("/Currency.jsp").forward(req, resp);

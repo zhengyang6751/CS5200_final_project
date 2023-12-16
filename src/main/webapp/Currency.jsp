@@ -16,11 +16,13 @@ contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
             <th>Weekly Caps</th>
             <th>Total Caps</th>
         </tr>
-        <c:forEach var="currency" items="${currencyList}">
+        <c:forEach var="currency" items="${currencies}">
             <tr>
-                <td>${currency.currencyName}</td>
-                <td>${currency.weeklyCaps}</td>
-                <td>${currency.totalCaps}</td>
+                
+                <td><c:out value="${currency.currencyName}" /></td>
+                <td><c:out value="${currency.weeklyCaps}" /></td>
+                <td><c:out value="${currency.totalCaps}" /></td>
+                
             </tr>
         </c:forEach>
     </table>

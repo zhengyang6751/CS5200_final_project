@@ -1,6 +1,7 @@
 package blog.dal;
 
 import blog.model.*;
+import blog.model.Character;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -145,8 +146,8 @@ public class CurrencyDao {
 			}
 		}
 		
-	public List<Currency> getCurrenciesByCharacterName(String characterName) throws SQLException {
-        String query = "SELECT * FROM Currency WHERE characterName = ?;";
+	public List<Currency> getCurrenciesByFullName(Character character) throws SQLException {
+        String query = "SELECT * FROM CharacterCurrency A JOIN Currency B ON A.currencyName = B.currencyName WHERE firstName = ? AND lastName = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet results = null;
@@ -155,10 +156,12 @@ public class CurrencyDao {
         try {
             connection = connectionManager.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setString(1, characterName);
+            statement.setString(1, character.getFirstName());
+            statement.setString(2, character.getLastName());
+            System.out.println("@@@@@");
             results = statement.executeQuery();
 
-            while (results.next()) {
+            while (results.next()) {            	
                 String currencyName = results.getString("currencyName");
                 int weeklyCaps = results.getInt("weeklyCaps");
                 int totalCaps = results.getInt("totalCaps");
@@ -169,7 +172,7 @@ public class CurrencyDao {
             e.printStackTrace();
             throw e;
         }
-
+        System.out.println(currencies.size());
         return currencies;
     }
 	
